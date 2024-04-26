@@ -75,10 +75,45 @@
     usercard.appendChild(userid); //добавляем
 
 
+    const initData = '...'; // данные из Telegram.WebApp.initData
+    const data = new URLSearchParams(initData);
+
+    // Получение хеша из данных
+    const receivedHash = data.get('hash');
+
+    // Отправка данных на бекенд для аутентификации
+    fetch('https://webhook.site/922eeb69-b0f2-4767-8c6a-82ab1f5ee570', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            data: initData,
+            hash: receivedHash,
+        }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Получение access token из ответа бекенда
+            const accessToken = data.accessToken;
+            // Сохранение access token для последующих запросов
+            localStorage.setItem('accessToken', accessToken);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+
+
     //работает только в attachment menu
     // let pic = document.createElement('img'); //создаем img
     // pic.src = tg.initDataUnsafe.user.photo_url; //задаём src
     // usercard.appendChild(pic); //добавляем элемент в карточку
 </script>
 
+https://webhook.site/922eeb69-b0f2-4767-8c6a-82ab1f5ee570
 </html>
