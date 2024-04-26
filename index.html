@@ -75,39 +75,18 @@
     usercard.appendChild(userid); //добавляем
 
 
-    const initData = '...'; // данные из Telegram.WebApp.initData
+    const initData = Telegram.WebApp.initData; // данные из Telegram.WebApp.initData
     const data = new URLSearchParams(initData);
 
     // Получение хеша из данных
     const receivedHash = data.get('hash');
 
     // Отправка данных на бекенд для аутентификации
-    fetch('http://webhook.site/922eeb69-b0f2-4767-8c6a-82ab1f5ee570', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            data: initData,
-            hash: receivedHash,
-        }),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Получение access token из ответа бекенда
-            const accessToken = data.accessToken;
-            // Сохранение access token для последующих запросов
-            localStorage.setItem('accessToken', accessToken);
-        })
-        .catch(error => {
-            console.error('There was an error!', error);
-        });
 
+    outputElement.textContent = JSON.stringify({
+        data: initData,
+        hash: receivedHash,
+    });
 
     //работает только в attachment menu
     // let pic = document.createElement('img'); //создаем img
