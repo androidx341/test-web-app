@@ -18,12 +18,9 @@
     <button id="btnED" class="button">Enable/Disable Main Button</button> <!--Кнопка, чтобы сделать кнопку активной/неактивной-->
 
     <button onclick="requestContact()">Request Contact</button>
+    <button id="btnPay">Pay</button>
 </body>
 <script>
-    function requestContact() {
-        window.location.href = 'tg://user?id=472858411';
-    }
-
     var fullUrl = window.location.href;
     var outputElement = document.getElementById("output");
     outputElement.textContent = fullUrl;
@@ -39,6 +36,7 @@
     tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры
 
     let btn = document.getElementById("btn"); //получаем кнопку скрыть/показать
+    let btnPay = document.getElementById("btnPay"); //получаем кнопку скрыть/показать
 
     btn.addEventListener('click', function(){ //вешаем событие на нажатие html-кнопки
         if (tg.MainButton.isVisible){ //если кнопка показана
@@ -48,6 +46,12 @@
             tg.MainButton.show() //показываем
         }
     });
+
+    btnPay.addEventListener('click', function(){ //вешаем событие на нажатие html-кнопки
+       tg.openInvoice('https://t.me/$VWzLyrG50ElFBQAARzF7yhy7Uq0');
+    });
+
+
 
     let btnED = document.getElementById("btnED"); //получаем кнопку активировать/деактивировать
     btnED.addEventListener('click', function(){ //вешаем событие на нажатие html-кнопки
